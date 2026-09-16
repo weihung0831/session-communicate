@@ -1,0 +1,12 @@
+{
+  "name": "session-communicate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "看多個 Claude Code session 互相傳訊息的本機網頁",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

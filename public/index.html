@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session 即時溝通</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="dot" id="liveDot"></span>
+    <h1>Session 即時溝通</h1>
+    <span class="mode" id="modeLabel">即時</span>
+  </div>
+  <div class="clock" id="clock"></div>
+  <div class="controls">
+    <span id="activity" class="muted"></span>
+  </div>
+</header>
+<div class="stage">
+  <canvas id="canvas"></canvas>
+  <div class="card" id="card" hidden>
+    <div class="card-head">
+      <span class="card-name" id="cardName"></span>
+      <span class="card-status" id="cardStatus"></span>
+      <button class="card-close" id="cardClose" aria-label="關閉">×</button>
+    </div>
+    <div class="card-body" id="cardBody"></div>
+  </div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
