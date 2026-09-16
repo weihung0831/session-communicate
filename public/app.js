@@ -12,7 +12,6 @@ const S = {
   pairs: new Map(),
   flights: [],
   ripples: [],
-  bubbles: [],
   particles: [],
   stars: [],
   known: new Map(),
@@ -161,8 +160,6 @@ function arrive(f) {
   S.ripples.push({ x: f.b.x, y: f.b.y, r0: f.b.r, t0: now, name: f.m.from.name, failed, big: true });
   S.ripples.push({ x: f.b.x, y: f.b.y, r0: f.b.r, t0: now + 140, name: f.m.from.name, failed });
   burst(f.b.x, f.b.y, f.m.from.name, 28, 2.4);
-  const text = f.m.summary || f.m.body.split('\n')[0];
-  S.bubbles.push({ node: f.b, text: text.slice(0, 40) + (text.length > 40 ? '…' : ''), t0: performance.now(), dur: 20000, name: f.m.from.name });
 }
 
 function delivered(m) {
@@ -387,24 +384,6 @@ function drawFlights(now) {
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    const lab = f.m.summary;
-    if (lab && p > 0.1 && p < 0.9) {
-      const k = Math.min(1, (p - 0.1) / 0.12) * Math.min(1, (0.9 - p) / 0.12);
-      ctx.globalAlpha = k;
-      ctx.font = '12px -apple-system, system-ui';
-      ctx.textAlign = 'center';
-      const label = lab.slice(0, 26) + (lab.length > 26 ? '…' : '');
-      const tw = ctx.measureText(label).width + 18;
-      ctx.fillStyle = 'rgba(7,9,14,.88)';
-      roundRect(pos.x - tw / 2, pos.y - 40 + (1 - k) * 8, tw, 24, 12);
-      ctx.fill();
-      ctx.strokeStyle = color(f.m.from.name, 0.6);
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.fillStyle = '#e8eaf0';
-      ctx.fillText(label, pos.x, pos.y - 23 + (1 - k) * 8);
-      ctx.globalAlpha = 1;
-    }
     if (p >= 1) { f.done = true; arrive(f); }
   }
   S.flights = S.flights.filter(f => !f.done);
@@ -530,34 +509,6 @@ function drawNodes(now, wall) {
   }
 }
 
-function drawBubbles(now) {
-  S.bubbles = S.bubbles.filter(b => now - b.t0 < b.dur);
-  const perNode = new Map();
-  for (const b of S.bubbles) {
-    const p = (now - b.t0) / b.dur;
-    const inK = Math.min(1, p / 0.08);
-    const alpha = p < 0.08 ? easeOut(inK) : p > 0.82 ? (1 - p) / 0.18 : 1;
-    const idx = perNode.get(b.node) || 0;
-    perNode.set(b.node, idx + 1);
-    ctx.font = '12px -apple-system, system-ui';
-    const tw = ctx.measureText(b.text).width + 22;
-    const x = Math.min(S.w - tw - 8, Math.max(8, b.node.x - tw / 2));
-    const y = b.node.y - (b.node.r || 36) - 34 - idx * 32 - (1 - easeOut(inK)) * 14;
-    ctx.globalAlpha = alpha;
-    ctx.fillStyle = 'rgba(18,22,32,.96)';
-    ctx.strokeStyle = color(b.name, 0.9);
-    ctx.lineWidth = 1.5;
-    roundRect(x, y, tw, 26, 13);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = '#e8eaf0';
-    ctx.textAlign = 'left';
-    ctx.fillText(b.text, x + 11, y + 17);
-    ctx.textAlign = 'center';
-    ctx.globalAlpha = 1;
-  }
-}
-
 let lastT = performance.now();
 function draw(now) {
   const dt = Math.min(50, now - lastT);
@@ -578,7 +529,6 @@ function draw(now) {
     drawRipples(now);
     drawFlights(now);
     drawNodes(now, wall);
-    drawBubbles(now);
   }
 
   if (cardNode) {
