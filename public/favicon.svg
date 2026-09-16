@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="a" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#8fd3ff"/><stop offset="1" stop-color="#1f6fb2"/></radialGradient>
+    <radialGradient id="b" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#ffb8c8"/><stop offset="1" stop-color="#c2255c"/></radialGradient>
+    <linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8fd3ff" stop-opacity="0"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0b0e14"/>
+  <path d="M20 20 Q40 14 46 44" stroke="url(#c)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="18" cy="20" r="11" fill="#2f8fe0" opacity=".6" filter="url(#g)"/>
+  <circle cx="18" cy="20" r="9.5" fill="url(#a)"/>
+  <circle cx="46" cy="44" r="11" fill="#e0407a" opacity=".6" filter="url(#g)"/>
+  <circle cx="46" cy="44" r="9.5" fill="url(#b)"/>
+  <circle cx="45" cy="42" r="4.2" fill="#fff"/>
+</svg>
